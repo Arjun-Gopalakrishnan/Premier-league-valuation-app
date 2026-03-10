@@ -20,12 +20,12 @@ except Exception as e:
     st.error(f"Error loading files: {e}")
     st.stop()
 
-# 3. GLOBAL CSS FIXES (Maximum Visibility)
+# 3. GLOBAL CSS FIXES (White Background for Result)
 st.markdown(
     f"""
     <style>
     .stApp {{
-        background-color: #ffffff;
+        background-color: #f0f2f6;
         background-image: url("https://th.bing.com/th/id/OIG1.fGz2fKzH_W5S2lU_N9z6?pid=ImgGn");
         background-attachment: fixed;
         background-size: cover;
@@ -48,20 +48,10 @@ st.markdown(
         margin-bottom: 25px;
     }}
 
-    /* Forcing Deep Purple for all normal text */
+    /* Forcing Deep Purple for all normal labels */
     h1, h2, h3, h4, h5, h6, p, label, .stSelectbox label, div[data-baseweb="slider"] label {{
         color: #3d0052 !important; 
         font-weight: 800 !important;
-    }}
-
-    /* FIX FOR SUB-HEADER VISIBILITY */
-    .sub-header-text {{
-        color: #3d0052 !important;
-        font-weight: 700 !important;
-        font-size: 1.2rem;
-        background: yellow; /* Highlighted background for the subheader */
-        padding: 5px;
-        display: inline-block;
     }}
     </style>
     """, 
@@ -76,7 +66,7 @@ with st.container():
         st.image("https://download.logo.wine/logo/Premier_League/Premier_League-Logo.wine.png", width=130)
     with title_col:
         st.title("Premier League Elite Valuation Tool")
-        st.markdown('<p class="sub-header-text">Professional Recruitment & Financial Audit System</p>', unsafe_allow_html=True)
+        st.markdown('<p style="color:#3d0052; font-weight:bold;">Professional Recruitment & Financial Audit System</p>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # 5. Dashboard Grid
@@ -108,19 +98,19 @@ with col2:
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
     st.header("💰 Valuation Result")
     
-    # NEON RED & YELLOW HIGHLIGHTED VALUATION BOX
+    # NEW FAIL-PROOF WHITE BOX WITH PURPLE TEXT
     st.markdown(f"""
         <div style="
-            background-color: #3d0052; 
+            background-color: #ffffff; 
             padding: 20px; 
             border-radius: 12px; 
-            border: 4px solid #FFFF00; 
+            border: 4px solid #3d0052; 
             text-align: center;
             margin-bottom: 20px;">
-            <p style="color: #FFFF00 !important; font-size: 1.1rem !important; font-weight: 900 !important; margin: 0; text-transform: uppercase;">
+            <p style="color: #3d0052 !important; font-size: 1rem !important; font-weight: 900 !important; margin: 0; text-transform: uppercase;">
                 Statistical Fair Value
             </p>
-            <h1 style="color: #FF3131 !important; font-size: 4rem !important; margin: 10px 0; font-family: Impact, sans-serif; font-weight: 900; line-height: 1; filter: drop-shadow(2px 2px 2px #000);">
+            <h1 style="color: #3d0052 !important; font-size: 3.5rem !important; margin: 10px 0; font-family: Arial, sans-serif; font-weight: 900; line-height: 1;">
                 £{prediction:.2f}M
             </h1>
         </div>
