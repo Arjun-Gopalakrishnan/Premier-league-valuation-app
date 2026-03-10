@@ -8,10 +8,10 @@ st.set_page_config(page_title="PL Elite Valuation", page_icon="🦁", layout="wi
 # 2. Load Assets
 @st.cache_resource
 def load_assets():
-    # Loading the trained brain from your scoredata folder
+    # Loading the trained model from your repository
     with open('market_value_model.pkl', 'rb') as file:
         model = pickle.load(file)
-    # Loading the full database of players
+    # Loading the player database
     df = pd.read_csv('top_scorers.csv')
     df.columns = df.columns.str.strip()
     return model, df
@@ -22,7 +22,7 @@ except Exception as e:
     st.error(f"Error loading files: {e}")
     st.stop()
 
-# 3. UI Customization for Maximum Visibility
+# 3. UI Customization & Visibility Fixes
 st.markdown(
     f"""
     <style>
@@ -32,7 +32,7 @@ st.markdown(
         background-size: cover;
     }}
     
-    /* Solid white containers for readability */
+    /* Main Content Containers */
     .main-container {{
         background: rgba(255, 255, 255, 0.95); 
         padding: 25px;
@@ -42,7 +42,7 @@ st.markdown(
         margin-bottom: 20px;
     }}
 
-    /* Title area styling */
+    /* Title Area Styling */
     .title-area {{
         background: rgba(255, 255, 255, 0.9);
         padding: 20px;
@@ -51,45 +51,45 @@ st.markdown(
         margin-bottom: 30px;
     }}
 
-    /* FORCE ALL LABELS AND TEXT TO DEEP PURPLE */
+    /* Text & Label Styling for Readability */
     h1, h2, h3, p, label, .stSelectbox label, div[data-baseweb="slider"] label {{
         color: #3d0052 !important; 
         font-weight: 800 !important;
-        font-size: 1.1rem !important;
     }}
 
-    /* Specific fix for the slider numbers and labels */
-    div[data-baseweb="slider"] div {{
-        color: #3d0052 !important;
-        font-weight: bold !important;
-    }}
-
-    /* Metric Result Box styling */
+    /* HIGH VISIBILITY FIX FOR VALUATION RESULT */
     [data-testid="stMetricValue"] {{
-        color: #00ff87 !important; /* Neon Green for the Price */
-        background-color: #3d0052;
-        padding: 15px;
-        border-radius: 12px;
-        font-size: 42px !important;
+        color: #ffffff !important; /* Pure White Text */
+        background-color: #3d0052 !important; /* Deep Purple Background */
+        padding: 20px !important;
+        border-radius: 15px !important;
+        font-size: 50px !important;
+        font-weight: 900 !important;
+        border: 3px solid #00ff87 !important; /* Neon Green Border */
+        display: block;
+        text-align: center;
+    }}
+
+    /* Fix for the Label "Statistical Fair Value" */
+    [data-testid="stMetricLabel"] p {{
+        color: #3d0052 !important;
+        font-size: 1.2rem !important;
+        font-weight: bold !important;
     }}
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# 4. App Content Header with Logo
+# 4. App Header
 with st.container():
-    # Adding a background box for the header for better contrast
     st.markdown('<div class="title-area">', unsafe_allow_html=True)
-    
-    # Grid for Logo and Title
     logo_col, title_col = st.columns([1, 4])
     with logo_col:
         st.image("https://download.logo.wine/logo/Premier_League/Premier_League-Logo.wine.png", width=150)
     with title_col:
         st.title("Premier League Elite Valuation Tool")
         st.markdown("##### Professional Recruitment & Financial Audit System")
-    
     st.markdown('</div>', unsafe_allow_html=True)
 
 # 5. Dashboard Grid
@@ -120,6 +120,7 @@ with col1:
 with col2:
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
     st.header("💰 Valuation Result")
+    # Metric now uses the updated white-on-purple CSS
     st.metric(label="Statistical Fair Value", value=f"£{prediction:.2f}M")
     
     st.markdown("---")
