@@ -8,7 +8,7 @@ st.set_page_config(page_title="PL Elite Valuation", page_icon="🦁", layout="wi
 # 2. Load Assets
 @st.cache_resource
 def load_assets():
-    # Loading the trained model from your repository
+    # Loading the trained model
     with open('market_value_model.pkl', 'rb') as file:
         model = pickle.load(file)
     # Loading the player database
@@ -22,7 +22,7 @@ except Exception as e:
     st.error(f"Error loading files: {e}")
     st.stop()
 
-# 3. UI Customization & Visibility Fixes
+# 3. Global UI Styling
 st.markdown(
     f"""
     <style>
@@ -32,7 +32,6 @@ st.markdown(
         background-size: cover;
     }}
     
-    /* Main Content Containers */
     .main-container {{
         background: rgba(255, 255, 255, 0.95); 
         padding: 25px;
@@ -42,7 +41,6 @@ st.markdown(
         margin-bottom: 20px;
     }}
 
-    /* Title Area Styling */
     .title-area {{
         background: rgba(255, 255, 255, 0.9);
         padding: 20px;
@@ -51,30 +49,10 @@ st.markdown(
         margin-bottom: 30px;
     }}
 
-    /* Text & Label Styling for Readability */
+    /* Ensuring all sidebar and slider labels are readable */
     h1, h2, h3, p, label, .stSelectbox label, div[data-baseweb="slider"] label {{
         color: #3d0052 !important; 
         font-weight: 800 !important;
-    }}
-
-    /* HIGH VISIBILITY FIX FOR VALUATION RESULT */
-    [data-testid="stMetricValue"] {{
-        color: #ffffff !important; /* Pure White Text */
-        background-color: #3d0052 !important; /* Deep Purple Background */
-        padding: 20px !important;
-        border-radius: 15px !important;
-        font-size: 50px !important;
-        font-weight: 900 !important;
-        border: 3px solid #00ff87 !important; /* Neon Green Border */
-        display: block;
-        text-align: center;
-    }}
-
-    /* Fix for the Label "Statistical Fair Value" */
-    [data-testid="stMetricLabel"] p {{
-        color: #3d0052 !important;
-        font-size: 1.2rem !important;
-        font-weight: bold !important;
     }}
     </style>
     """,
@@ -120,8 +98,25 @@ with col1:
 with col2:
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
     st.header("💰 Valuation Result")
-    # Metric now uses the updated white-on-purple CSS
-    st.metric(label="Statistical Fair Value", value=f"£{prediction:.2f}M")
+    
+    # CUSTOM VALUATION BOX (Replaces the broken st.metric)
+    st.markdown(f"""
+        <div style="
+            background-color: #3d0052; 
+            padding: 35px; 
+            border-radius: 15px; 
+            border: 4px solid #00ff87; 
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+            <p style="color: #00ff87; font-size: 1.1rem; font-weight: bold; margin: 0; text-transform: uppercase; letter-spacing: 2px;">
+                Statistical Fair Value
+            </p>
+            <h1 style="color: #ffffff !important; font-size: 4.5rem !important; margin: 10px 0 0 0; font-family: 'Segoe UI', Arial, sans-serif; font-weight: 900; line-height: 1;">
+                £{prediction:.2f}M
+            </h1>
+        </div>
+    """, unsafe_allow_html=True)
     
     st.markdown("---")
     st.subheader("💼 Financial Audit")
