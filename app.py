@@ -8,10 +8,8 @@ st.set_page_config(page_title="PL Elite Valuation", page_icon="🦁", layout="wi
 # 2. Load Assets
 @st.cache_resource
 def load_assets():
-    # Loading the trained model
     with open('market_value_model.pkl', 'rb') as file:
         model = pickle.load(file)
-    # Loading the player database
     df = pd.read_csv('top_scorers.csv')
     df.columns = df.columns.str.strip()
     return model, df
@@ -22,7 +20,7 @@ except Exception as e:
     st.error(f"Error loading files: {e}")
     st.stop()
 
-# 3. Global UI Styling
+# 3. UI Global Styling
 st.markdown(
     f"""
     <style>
@@ -34,22 +32,21 @@ st.markdown(
     
     .main-container {{
         background: rgba(255, 255, 255, 0.95); 
-        padding: 25px;
-        border-radius: 15px;
+        padding: 20px;
+        border-radius: 12px;
         border: 2px solid #3d0052;
         box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }}
 
     .title-area {{
         background: rgba(255, 255, 255, 0.9);
-        padding: 20px;
-        border-radius: 15px;
-        border-left: 10px solid #3d0052;
-        margin-bottom: 30px;
+        padding: 15px;
+        border-radius: 12px;
+        border-left: 8px solid #3d0052;
+        margin-bottom: 20px;
     }}
 
-    /* Ensuring all sidebar and slider labels are readable */
     h1, h2, h3, p, label, .stSelectbox label, div[data-baseweb="slider"] label {{
         color: #3d0052 !important; 
         font-weight: 800 !important;
@@ -64,14 +61,14 @@ with st.container():
     st.markdown('<div class="title-area">', unsafe_allow_html=True)
     logo_col, title_col = st.columns([1, 4])
     with logo_col:
-        st.image("https://download.logo.wine/logo/Premier_League/Premier_League-Logo.wine.png", width=150)
+        st.image("https://download.logo.wine/logo/Premier_League/Premier_League-Logo.wine.png", width=120)
     with title_col:
         st.title("Premier League Elite Valuation Tool")
         st.markdown("##### Professional Recruitment & Financial Audit System")
     st.markdown('</div>', unsafe_allow_html=True)
 
 # 5. Dashboard Grid
-col1, col2 = st.columns([1, 1], gap="large")
+col1, col2 = st.columns([1, 1], gap="medium")
 
 with col1:
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
@@ -99,22 +96,21 @@ with col2:
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
     st.header("💰 Valuation Result")
     
-    # CUSTOM VALUATION BOX (Replaces the broken st.metric)
+    # FINAL COMPACT VALUATION BOX
     st.markdown(f"""
         <div style="
             background-color: #3d0052; 
-            padding: 35px; 
-            border-radius: 15px; 
-            border: 4px solid #00ff87; 
+            padding: 15px; 
+            border-radius: 10px; 
+            border: 2px solid #00ff87; 
             text-align: center;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
-            <p style="color: #00ff87; font-size: 1.1rem; font-weight: bold; margin: 0; text-transform: uppercase; letter-spacing: 2px;">
+            margin-bottom: 20px;">
+            <p style="color: #00ff87; font-size: 0.9rem; font-weight: bold; margin: 0; text-transform: uppercase;">
                 Statistical Fair Value
             </p>
-            <h1 style="color: #ffffff !important; font-size: 4.5rem !important; margin: 10px 0 0 0; font-family: 'Segoe UI', Arial, sans-serif; font-weight: 900; line-height: 1;">
+            <h2 style="color: #ffffff !important; font-size: 3rem !important; margin: 5px 0; font-family: Arial, sans-serif; font-weight: 900; line-height: 1.1;">
                 £{prediction:.2f}M
-            </h1>
+            </h2>
         </div>
     """, unsafe_allow_html=True)
     
