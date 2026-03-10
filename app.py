@@ -20,11 +20,10 @@ except Exception as e:
     st.error(f"Error loading files: {e}")
     st.stop()
 
-# 3. GLOBAL CSS FIXES (Forcing Colors)
+# 3. GLOBAL CSS FIXES (Maximum Visibility)
 st.markdown(
     f"""
     <style>
-    /* 1. Main Background */
     .stApp {{
         background-color: #ffffff;
         background-image: url("https://th.bing.com/th/id/OIG1.fGz2fKzH_W5S2lU_N9z6?pid=ImgGn");
@@ -32,7 +31,6 @@ st.markdown(
         background-size: cover;
     }}
     
-    /* 2. White Boxes for Content */
     .main-container {{
         background: rgba(255, 255, 255, 0.98); 
         padding: 20px;
@@ -42,7 +40,6 @@ st.markdown(
         margin-bottom: 15px;
     }}
 
-    /* 3. Header Styling - FORCING PURPLE TEXT */
     .title-area {{
         background: rgba(255, 255, 255, 0.95);
         padding: 15px;
@@ -51,20 +48,23 @@ st.markdown(
         margin-bottom: 25px;
     }}
 
-    /* Force all standard Streamlit text to Deep Purple */
+    /* Forcing Deep Purple for all normal text */
     h1, h2, h3, h4, h5, h6, p, label, .stSelectbox label, div[data-baseweb="slider"] label {{
         color: #3d0052 !important; 
         font-weight: 800 !important;
     }}
 
-    /* Fix for the sub-header "Professional Recruitment..." */
+    /* FIX FOR SUB-HEADER VISIBILITY */
     .sub-header-text {{
         color: #3d0052 !important;
         font-weight: 700 !important;
         font-size: 1.2rem;
+        background: yellow; /* Highlighted background for the subheader */
+        padding: 5px;
+        display: inline-block;
     }}
     </style>
-    """,
+    """, 
     unsafe_allow_html=True
 )
 
@@ -76,7 +76,6 @@ with st.container():
         st.image("https://download.logo.wine/logo/Premier_League/Premier_League-Logo.wine.png", width=130)
     with title_col:
         st.title("Premier League Elite Valuation Tool")
-        # Explicitly styling the sub-header so it's not white
         st.markdown('<p class="sub-header-text">Professional Recruitment & Financial Audit System</p>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -109,19 +108,19 @@ with col2:
     st.markdown('<div class="main-container">', unsafe_allow_html=True)
     st.header("💰 Valuation Result")
     
-    # HIGHLIGHTED VALUATION BOX - Now using Neon Green for the Number
+    # NEON RED & YELLOW HIGHLIGHTED VALUATION BOX
     st.markdown(f"""
         <div style="
             background-color: #3d0052; 
             padding: 20px; 
             border-radius: 12px; 
-            border: 3px solid #3d0052; 
+            border: 4px solid #FFFF00; 
             text-align: center;
             margin-bottom: 20px;">
-            <p style="color: #ffffff; font-size: 1rem; font-weight: bold; margin: 0; text-transform: uppercase;">
+            <p style="color: #FFFF00 !important; font-size: 1.1rem !important; font-weight: 900 !important; margin: 0; text-transform: uppercase;">
                 Statistical Fair Value
             </p>
-            <h1 style="color: #00ff87 !important; font-size: 3.5rem !important; margin: 10px 0; font-family: Arial, sans-serif; font-weight: 900; line-height: 1;">
+            <h1 style="color: #FF3131 !important; font-size: 4rem !important; margin: 10px 0; font-family: Impact, sans-serif; font-weight: 900; line-height: 1; filter: drop-shadow(2px 2px 2px #000);">
                 £{prediction:.2f}M
             </h1>
         </div>
